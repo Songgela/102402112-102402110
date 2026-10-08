@@ -17,8 +17,5 @@
   "devDependencies": {
     "chai": "^4.5.0",
     "mocha": "^10.7.3"
-  },
-  "dependencies": {
-    "puppeteer-core": "^25.12.0"
   }
 }
