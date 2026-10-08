@@ -11,3 +11,6 @@ Thumbs.db
 .vscode/
 .idea/
 *.swp
+
+# 工作目录内部文件（非项目交付物）
+.workbuddy/
