@@ -20,3 +20,6 @@ Thumbs.db
 
 # 线上发布副本（由 publish/ 目录上传，不纳入版本控制）
 publish/
+
+# 应用标记文件（内部产物）
+*.genie
