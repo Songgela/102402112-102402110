@@ -398,12 +398,14 @@
       if (copyEl) {
         e.stopPropagation();
         var raw = copyEl.getAttribute('data-copy');
-        var isPhone = /^1\d{10}$/.test(raw);
-        // 手机号处于脱敏状态时，第一次点击是「展开」而非复制
-        if (isPhone && !phoneRevealed) {
+        // 只有在「手机号 + 仍处脱敏状态」时，第一次点击才是展开而非复制。
+        // 用 data-phone 属性显式判断，而不是用正则去猜原始值是不是手机号 ——
+        // 后者会把「原始值恰好是 11 位数字的微信号」误判成手机号。
+        var needReveal = copyEl.getAttribute('data-phone') === 'masked';
+        if (needReveal) {
           phoneRevealed = true;
           refreshDetail();
-          toast('已显示完整手机号');
+          toast('已显示完整手机号，再次点击可复制');
         } else {
           copyText(raw);
         }

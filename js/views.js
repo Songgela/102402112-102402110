@@ -146,13 +146,21 @@
         '<span style="font-weight:700">' + escapeHtml(item.name) + '</span></div>');
     }
     if (im) {
+      // 微信号：点击即复制（无隐私顾虑，直接明文显示）
       html.push('<div class="contact-row"><span class="contact-row__label">QQ / 微信</span>' +
-        '<span class="contact-row__value" data-copy="' + escapeHtml(im) + '">' + escapeHtml(im) +
+        '<span class="contact-row__value" data-copy="' + escapeHtml(im) + '" title="点击复制">' +
+        '💬 ' + escapeHtml(im) +
         ' <span style="font-size:11px;color:var(--primary)">点击复制</span></span></div>');
     }
     if (phone) {
+      // 手机号：默认脱敏，data-phone="masked" 明确标记待展开状态，
+      // 避免依赖「用正则猜原始值是不是手机号」这种脆弱的判断方式
+      var phoneAttrs = 'data-copy="' + escapeHtml(phone) + '"' +
+        (opts.maskedPhone ? ' data-phone="masked"' : ' data-phone="plain"') +
+        ' title="点击复制"';
       html.push('<div class="contact-row"><span class="contact-row__label">手机号</span>' +
-        '<span class="contact-row__value" data-copy="' + escapeHtml(phone) + '">' + escapeHtml(showPhone) +
+        '<span class="contact-row__value" ' + phoneAttrs + '>' +
+        '📱 ' + escapeHtml(showPhone) +
         (opts.maskedPhone ? ' <span style="font-size:11px;color:var(--primary)">点击展开</span>' : '') +
         '</span></div>');
     }
