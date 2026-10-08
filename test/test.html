@@ -69,5 +69,36 @@
     mocha.run();
   </script>
 
+  <!-- ============ 环境自检（兜底提示） ============ -->
+  <script>
+    // 正常情况下：双击本文件用 Chrome 打开（地址栏以 file:/// 开头），测试全部通过。
+    // 若本页面被放在「受限预览面板 / 沙箱 iframe」中打开（地址栏是 http://127.0.0.1:端口/...），
+    // 会出现两类典型报错：
+    //   1) SecurityError: Failed to read the 'localStorage'  —— 沙箱禁用了本地存储；
+    //   2) TypeError: Cannot read properties of undefined    —— ../js/*.js 相对路径加载不到。
+    // 这时页面会全部变红。下面的自检会在检测到这种情况时，把顶部提示条替换为红色警告并给出解决方法。
+    window.addEventListener('load', function () {
+      setTimeout(function () {
+        var okStore = typeof window.LFStore !== 'undefined';
+        var okData = typeof window.LFData !== 'undefined';
+        var storageOk = true;
+        try { window.localStorage.getItem('_probe_'); } catch (err) { storageOk = false; }
+        if (okStore && okData && storageOk) { return; } // 环境正常，不打扰
+
+        var tip = document.getElementById('summary-tip');
+        if (!tip) { return; }
+        tip.style.background = '#fdecea';
+        tip.innerHTML =
+          '<strong style="color:#c0392b">⚠️ 检测到运行环境受限，测试无法正常执行</strong><br>' +
+          '当前地址：<code>' + window.location.href.slice(0, 70) + '</code><br>' +
+          (okStore ? '' : '· <code>js/store.js</code> 未加载成功（TypeError: reading \'xxx\' of undefined）<br>') +
+          (okData ? '' : '· <code>js/data.js</code> 未加载成功<br>') +
+          (storageOk ? '' : '· <code>localStorage</code> 被当前环境禁用（SecurityError）<br>') +
+          '<strong style="color:#c0392b">解决方法：在文件资源管理器中直接双击本文件（test/test.html），' +
+          '用 Chrome 打开即可——地址栏应以 file:/// 开头，不要通过预览面板或受限 iframe 打开。</strong>';
+      }, 1200);
+    });
+  </script>
+
 </body>
 </html>
