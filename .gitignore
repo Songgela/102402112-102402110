@@ -1,0 +1,13 @@
+# 依赖目录（助教无需安装即可运行网页，node_modules 不必上传）
+node_modules/
+
+# 日志与系统文件
+npm-debug.log*
+*.log
+.DS_Store
+Thumbs.db
+
+# 编辑器配置
+.vscode/
+.idea/
+*.swp

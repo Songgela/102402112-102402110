@@ -1,0 +1,21 @@
+{
+  "name": "fzu-lost-and-found",
+  "version": "1.0.0",
+  "description": "福大拾光 · 校园失物招领平台 —— 福州大学结对编程作业（Web 端）",
+  "main": "index.html",
+  "scripts": {
+    "test": "mocha test/store.test.js --reporter spec"
+  },
+  "keywords": [
+    "校园失物招领",
+    "结对编程",
+    "福州大学",
+    "lost-and-found"
+  ],
+  "author": "结对编程小组",
+  "license": "MIT",
+  "devDependencies": {
+    "chai": "^4.5.0",
+    "mocha": "^10.7.3"
+  }
+}
