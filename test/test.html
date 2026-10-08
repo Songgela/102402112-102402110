@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>单元测试 · 福大拾光</title>
+  <link rel="stylesheet" href="lib/mocha.css">
+  <style>
+    /* 让测试报告更醒目：自定义顶部信息条 */
+    body { font-family: -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif; }
+    #banner {
+      background: linear-gradient(135deg, #7c5cff 0%, #5b3fd6 100%);
+      color: #fff; padding: 26px 30px;
+    }
+    #banner h1 { font-size: 21px; margin-bottom: 6px; font-weight: 800; }
+    #banner p { font-size: 13px; opacity: .9; line-height: 1.7; }
+    #banner code {
+      background: rgba(255, 255, 255, .18); padding: 2px 7px;
+      border-radius: 4px; font-size: 12.5px;
+    }
+    #summary-tip {
+      margin: 16px 30px 0; padding: 12px 16px; border-radius: 8px;
+      background: #f0f2f5; font-size: 13px; color: #5b6474;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="banner">
+    <h1>🧪 福大拾光 · 单元测试报告</h1>
+    <p>
+      测试对象：<code>js/store.js</code>（核心业务逻辑层） &nbsp;|&nbsp;
+      测试框架：<code>Mocha 10</code> + <code>Chai 4</code>
+    </p>
+    <p style="margin-top:6px">
+      覆盖范围：搜索匹配 · 多条件筛选 · 状态更新 · 表单校验 · 统计计算 · 工具函数 · 本地持久化 · 示例数据质量
+    </p>
+  </div>
+
+  <div id="summary-tip">
+    💡 提示：所有用例均通过时会显示绿色的 <strong>60 passing</strong>。
+    若出现红色，展开对应用例即可看到具体断言失败原因。
+  </div>
+
+  <!-- Mocha 将把测试报告渲染到 #mocha 中 -->
+  <div id="mocha"></div>
+
+  <!-- ============ 引入测试框架（本地文件，无需联网，双击即可运行） ============ -->
+  <script src="lib/mocha.js"></script>
+  <script src="lib/chai.js"></script>
+  <script>
+    // 配置 Mocha：BDD 风格接口 + 显示通过/失败的详细程度
+    mocha.setup({ ui: 'bdd', reporter: 'spec' });
+  </script>
+
+  <!-- ============ 引入被测代码 ============ -->
+  <script src="../js/store.js"></script>
+  <script src="../js/data.js"></script>
+
+  <!-- ============ 引入测试用例 ============ -->
+  <script src="store.test.js"></script>
+
+  <!-- ============ 运行测试 ============ -->
+  <script>
+    mocha.run();
+  </script>
+
+</body>
+</html>
