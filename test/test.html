@@ -38,8 +38,9 @@
   </div>
 
   <div id="summary-tip">
-    💡 提示：所有用例均通过时会显示绿色的 <strong>60 passing</strong>。
-    若出现红色，展开对应用例即可看到具体断言失败原因。
+    💡 提示：报告已按「测试分组 → 单条用例」逐级展开渲染在下方，绿色对勾表示通过。
+    顶部统计条会显示 <strong>61 passing</strong>；若出现红色的失败项，展开对应用例即可看到具体断言失败原因。
+    <br>⌨️ 命令行模式：在项目根目录执行 <code>npm test</code>，效果相同。
   </div>
 
   <!-- Mocha 将把测试报告渲染到 #mocha 中 -->
@@ -49,8 +50,11 @@
   <script src="lib/mocha.js"></script>
   <script src="lib/chai.js"></script>
   <script>
-    // 配置 Mocha：BDD 风格接口 + 显示通过/失败的详细程度
-    mocha.setup({ ui: 'bdd', reporter: 'spec' });
+    // 配置 Mocha：
+    // - ui: 'bdd' 表示用 describe / it 风格写用例
+    // - reporter: 'html' 会把报告直接渲染到下面的 #mocha 容器里
+    //   （若用 'spec' 则只往浏览器控制台打印，页面上会是空白）
+    mocha.setup({ ui: 'bdd', reporter: 'html' });
   </script>
 
   <!-- ============ 引入被测代码 ============ -->
