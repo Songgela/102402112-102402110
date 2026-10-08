@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="福大拾光 · 校园失物招领平台 —— 让每一件失物都能回家">
+  <title>福大拾光 · 校园失物招领</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- ==================== 顶部导航 ==================== -->
+  <header class="navbar">
+    <div class="navbar__inner">
+      <a class="brand" href="#" data-nav="home">
+        <div class="brand__logo">拾</div>
+        <div>
+          <div class="brand__name">福大拾光</div>
+          <div class="brand__slogan">CAMPUS LOST &amp; FOUND</div>
+        </div>
+      </a>
+
+      <nav class="navbar__links">
+        <a class="nav-link is-active" href="#" data-nav="home">🏠 首页</a>
+        <a class="nav-link" href="#" data-nav="browse">🔍 全部信息</a>
+        <a class="nav-link" href="#" data-nav="dashboard">📊 数据看板</a>
+        <a class="nav-link" href="#" data-nav="mine">👤 我的发布</a>
+      </nav>
+
+      <a class="btn-publish" href="#" data-nav="publish">➕ <span>发布信息</span></a>
+    </div>
+  </header>
+
+  <!-- ==================== 视图 1：首页 ==================== -->
+  <main id="page-home" class="page is-active">
+    <section class="hero">
+      <div class="hero__inner">
+        <h1 class="hero__title">让每一件失物，都能回家 🏠</h1>
+        <p class="hero__sub">发布寻物启事 · 浏览招领信息 · 关键词秒搜 · 一键联系失主</p>
+
+        <form class="search-box" id="hero-search-form">
+          <input class="search-box__input" type="text" id="hero-search-input"
+                 placeholder="搜索物品名称 / 地点，例如：校园卡、图书馆、airpods…" autocomplete="off">
+          <button class="search-box__btn" type="submit">搜一下</button>
+        </form>
+
+        <div class="hero__stats" id="hero-stats">
+          <div>
+            <div class="hero__stat-num" data-stat="total">0</div>
+            <div class="hero__stat-label">累计发布</div>
+          </div>
+          <div>
+            <div class="hero__stat-num" data-stat="closed">0</div>
+            <div class="hero__stat-label">成功找回</div>
+          </div>
+          <div>
+            <div class="hero__stat-num" data-stat="open">0</div>
+            <div class="hero__stat-label">正在寻找</div>
+          </div>
+          <div>
+            <div class="hero__stat-num" data-stat="rate">0%</div>
+            <div class="hero__stat-label">找回率</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="container">
+      <div class="quick-grid">
+        <a class="quick-card" href="#" data-nav="publish" data-preset="lost">
+          <div class="quick-card__icon" style="background:var(--lost-light);color:var(--lost)">🔎</div>
+          <div>
+            <div class="quick-card__title">我丢了东西</div>
+            <div class="quick-card__desc">发布寻物启事</div>
+          </div>
+        </a>
+        <a class="quick-card" href="#" data-nav="publish" data-preset="found">
+          <div class="quick-card__icon" style="background:var(--found-light);color:var(--found)">🎁</div>
+          <div>
+            <div class="quick-card__title">我捡到东西</div>
+            <div class="quick-card__desc">发布招领启事</div>
+          </div>
+        </a>
+        <a class="quick-card" href="#" data-nav="browse">
+          <div class="quick-card__icon" style="background:var(--primary-light);color:var(--primary)">📋</div>
+          <div>
+            <div class="quick-card__title">浏览全部信息</div>
+            <div class="quick-card__desc">按类别与状态筛选</div>
+          </div>
+        </a>
+        <a class="quick-card" href="#" data-nav="dashboard">
+          <div class="quick-card__icon" style="background:#fff4e0;color:#e08a1e">📊</div>
+          <div>
+            <div class="quick-card__title">数据看板</div>
+            <div class="quick-card__desc">找回率与趋势统计</div>
+          </div>
+        </a>
+      </div>
+
+      <div class="toolbar" style="justify-content:space-between">
+        <div class="toolbar__label">🕒 最新发布</div>
+        <a class="btn btn--ghost btn--sm" href="#" data-nav="browse">查看全部 →</a>
+      </div>
+      <div class="item-grid" id="home-list"></div>
+    </div>
+  </main>
+
+  <!-- ==================== 视图 2：浏览 / 搜索 ==================== -->
+  <main id="page-browse" class="page">
+    <div class="container">
+      <div class="toolbar">
+        <div class="tabs" id="type-tabs">
+          <button class="tab is-active" data-type="">全部</button>
+          <button class="tab" data-type="lost">🔎 寻物</button>
+          <button class="tab" data-type="found">🎁 招领</button>
+        </div>
+
+        <input class="input" type="text" id="browse-keyword" placeholder="关键词搜索…" style="flex:1;min-width:150px">
+
+        <select class="select" id="browse-category">
+          <option value="">全部类别</option>
+        </select>
+
+        <select class="select" id="browse-status">
+          <option value="">全部状态</option>
+          <option value="open">进行中</option>
+          <option value="closed">已结束</option>
+        </select>
+
+        <button class="btn btn--ghost btn--sm" id="browse-reset">重置</button>
+      </div>
+
+      <div class="toolbar__label" style="margin-bottom:12px" id="browse-count"></div>
+      <div class="item-grid" id="browse-list"></div>
+      <div id="browse-empty"></div>
+    </div>
+  </main>
+
+  <!-- ==================== 视图 3：发布 ==================== -->
+  <main id="page-publish" class="page">
+    <div class="container">
+      <div class="form-card">
+        <h2 class="form-title" id="publish-title">发布信息</h2>
+        <p class="form-sub">请尽量填写准确的地点与日期，便于失主与拾主互相匹配 🙂</p>
+
+        <form id="publish-form" novalidate>
+          <div class="form-row">
+            <label class="form-label">信息类型<span class="req">*</span></label>
+            <div class="type-switch" id="type-switch">
+              <div class="type-option is-active" data-type="lost">
+                <div class="type-option__icon">🔎</div>
+                <div class="type-option__title">寻物启事</div>
+                <div class="type-option__desc">我丢了东西，寻求帮助</div>
+              </div>
+              <div class="type-option" data-type="found">
+                <div class="type-option__icon">🎁</div>
+                <div class="type-option__title">招领启事</div>
+                <div class="type-option__desc">我捡到东西，寻找失主</div>
+              </div>
+            </div>
+            <input type="hidden" id="f-type" value="lost">
+            <div class="form-error" data-error="type"></div>
+          </div>
+
+          <div class="form-row form-row--2">
+            <div>
+              <label class="form-label" for="f-title">物品名称<span class="req">*</span></label>
+              <input class="form-control" type="text" id="f-title" placeholder="例如：校园卡、AirPods 耳机" maxlength="30">
+              <div class="form-error" data-error="title"></div>
+            </div>
+            <div>
+              <label class="form-label" for="f-category">物品类别<span class="req">*</span></label>
+              <select class="form-control" id="f-category">
+                <option value="">请选择类别</option>
+              </select>
+              <div class="form-error" data-error="category"></div>
+            </div>
+          </div>
+
+          <div class="form-row form-row--2">
+            <div>
+              <label class="form-label" for="f-place">地点<span class="req">*</span></label>
+              <input class="form-control" type="text" id="f-place" placeholder="例如：旗山校区图书馆三楼" maxlength="40">
+              <div class="form-error" data-error="place"></div>
+            </div>
+            <div>
+              <label class="form-label" for="f-date">日期<span class="req">*</span></label>
+              <input class="form-control" type="date" id="f-date">
+              <div class="form-error" data-error="date"></div>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <label class="form-label" for="f-desc">详细描述</label>
+            <textarea class="form-control" id="f-desc" maxlength="300"
+              placeholder="描述物品的外观特征、颜色、品牌、有无挂饰等，越详细越容易匹配成功（最多 300 字）"></textarea>
+            <div class="form-error" data-error="description"></div>
+          </div>
+
+          <div class="form-row form-row--2">
+            <div>
+              <label class="form-label" for="f-phone">手机号</label>
+              <input class="form-control" type="tel" id="f-phone" placeholder="11 位手机号" maxlength="11">
+            </div>
+            <div>
+              <label class="form-label" for="f-im">QQ / 微信号</label>
+              <input class="form-control" type="text" id="f-im" placeholder="至少填写一项联系方式">
+            </div>
+          </div>
+          <div class="form-error" data-error="contact" style="margin-top:-12px;margin-bottom:16px"></div>
+
+          <div class="form-row form-row--2">
+            <div>
+              <label class="form-label" for="f-name">联系人称呼</label>
+              <input class="form-control" type="text" id="f-name" placeholder="例如：李同学" maxlength="12">
+            </div>
+            <div>
+              <label class="form-label" for="f-emoji">物品图标</label>
+              <select class="form-control" id="f-emoji">
+                <option value="📦">📦 默认</option>
+                <option value="💳">💳 卡证类</option>
+                <option value="📱">📱 电子产品</option>
+                <option value="🎧">🎧 耳机</option>
+                <option value="🎒">🎒 包袋</option>
+                <option value="🔑">🔑 钥匙</option>
+                <option value="📚">📚 书籍</option>
+                <option value="👓">👓 眼镜</option>
+                <option value="⌚">⌚ 手表</option>
+                <option value="🌂">🌂 雨伞</option>
+                <option value="🧥">🧥 衣物</option>
+                <option value="🏀">🏀 运动器材</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:12px;margin-top:26px">
+            <button class="btn btn--primary" type="submit" style="flex:1">✅ 确认发布</button>
+            <button class="btn btn--ghost" type="button" id="publish-reset">清空重填</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <!-- ==================== 视图 4：数据看板 ==================== -->
+  <main id="page-dashboard" class="page">
+    <div class="container">
+      <div style="margin-bottom:22px">
+        <h2 class="form-title">📊 数据看板</h2>
+        <p class="form-sub" style="margin-bottom:0">实时统计校园失物招领的找回情况，数据来源于浏览器本地存储</p>
+      </div>
+
+      <div class="stat-grid" id="dashboard-stats"></div>
+
+      <div class="panel">
+        <div class="panel__title">📈 近 7 天发布趋势</div>
+        <div class="panel__desc">每日新增的寻物 / 招领信息数量</div>
+        <div class="chart" id="chart-days"></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel__title">🏷️ 物品类别分布</div>
+        <div class="panel__desc">哪类物品最容易丢？看看数据怎么说</div>
+        <div id="chart-category"></div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ==================== 视图 5：我的发布 ==================== -->
+  <main id="page-mine" class="page">
+    <div class="container">
+      <div class="toolbar" style="justify-content:space-between">
+        <div>
+          <div class="toolbar__label">👤 我的发布</div>
+          <div style="font-size:12px;color:var(--text-mute)">
+            本机浏览器记录的全部发布内容（数据存储于 localStorage）
+          </div>
+        </div>
+        <a class="btn btn--primary btn--sm" href="#" data-nav="publish">➕ 继续发布</a>
+      </div>
+      <div id="mine-list"></div>
+    </div>
+  </main>
+
+  <!-- ==================== 详情抽屉 ==================== -->
+  <div class="drawer-mask" id="drawer-mask"></div>
+  <aside class="drawer" id="drawer">
+    <div class="drawer__head">
+      <div class="drawer__title">物品详情</div>
+      <button class="drawer__close" id="drawer-close" title="关闭">✕</button>
+    </div>
+    <div class="drawer__body" id="drawer-body"></div>
+  </aside>
+
+  <!-- ==================== Toast 容器 ==================== -->
+  <div class="toast-wrap" id="toast-wrap"></div>
+
+  <!-- ==================== 页脚 ==================== -->
+  <footer class="footer">
+    <div>福大拾光 · 校园失物招领平台 &nbsp;|&nbsp; 结对编程作业 &nbsp;|&nbsp; 数据保存在本地浏览器，不上传服务器</div>
+    <div style="margin-top:6px">© 2026 福州大学 · 让我们帮每一件失物找到回家的路 ✨</div>
+  </footer>
+
+  <!-- ==================== 脚本 ==================== -->
+  <script src="js/store.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/views.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
